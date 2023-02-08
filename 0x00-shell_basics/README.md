@@ -1,1 +1,1 @@
-printing the absolute path name of the current working directory
+Creating scripts for shell basic commands such as printing directory path name, displaying directory contents, creating and deleting files and directories, creating symbolic links and copying HTML files
