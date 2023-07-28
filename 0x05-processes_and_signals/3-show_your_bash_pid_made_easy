@@ -5,9 +5,12 @@
 for dir in /proc/[0-9]*/
 do
 pid=$(basename "$dir")
-cmdline=$(tr '\0' ' ' < "$dir/cmdline")
-if grep -q -E '\bbash\b' <<< "$cmdline" && [ "$pid" != "$$" ]
+if [ -f "$dir/cmdline" ] && [ -r "$dir/cmdline" ]
 then
-echo "$pid " " $cmdline"
+read -r cmdline < "$dir/cmdline"
+if [[ "$cmdline" == *"bash"* ]] && [ "$pid" != "$$" ]
+then
+echo "$pid $cmdline"
+fi
 fi
 done
