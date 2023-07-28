@@ -5,12 +5,12 @@
 for dir in /proc/[0-9]*/
 do
 pid=$(basename "$dir")
-if [ -f "$dir/cmdline" ] && [ -r "$dir/cmdline" ]
+if [ -f "/proc/$pid/status" ] && [ -r "/proc/$pid/status" ]
 then
-read -r cmdline < "$dir/cmdline"
-if [[ "$cmdline" == *"bash"* ]] && [ "$pid" != "$$" ]
+process_name=$(awk '/Name/ {print $2}' "/proc/$pid/status")
+if [[ "$process_name" == *"bash"* ]] && [ "$pid" != "$$" ]
 then
-echo "$pid $cmdline"
+echo "$pid $process_name"
 fi
 fi
 done
