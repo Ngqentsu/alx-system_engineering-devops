@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Bash script that configures an Ubuntu server with the below requirements:
+# localhost resolves to 127.0.0.2
+# facebook.com resolves to 8.8.8.8
+
+if [[ $EUID -ne 0 ]]
+then
+echo "Please use sudo."
+exit 1
+fi
+
+LOCALHOST_IP="127.0.0.2"
+FACEBOOK_IP="8.8.8.8"
+
+sudo sed -i "s/^127\.0\.0\.1\slocalhost$/127.0.0.1 localhost\n$LOCALHOST_IP localhost/" /etc/hosts
+echo "$FACEBOOK_IP facebook.com" | sudo tee -a /etc/hosts
+sudo cp -f /etc/hosts.bak /etc/hosts
+sudo rm /etc/hosts.bak
