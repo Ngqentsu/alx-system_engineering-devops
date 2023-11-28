@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Configure your Nginx server so that /redirect_me is redirecting to another page
+
+#  updates the package lists for available software packages.
+apt-get update
+
+# installs the Nginx web server.
+apt-get install -y nginx
+
+# Create a basic HTML page with "Hello World!"
+mkdir -p /nginx/html
+echo "Hello World!" > /nginx/html/index.html
+
+# Ensure Nginx is listening on port 80
+printf %s "server {
+     listen      80;
+     listen      [::]:80 default_server;
+     root        /nginx/html;
+     index       index.html index.htm;
+}
+" > /nginx/sites-available/default
+
+# Configure new server block for redirection
+echo "server {
+    listen 80;
+    listen [::]:80;
+ 
+    root /var/www/html;
+
+    # Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}" | tee /nginx/sites-available/redirect
+
+# Enable new site configuration
+ln -s /nginx/sites-available/redirect /nginx/sites-enabled/
+
+
+# Test Nginx configuration and reload
+nginx -t
+service nginx reload
