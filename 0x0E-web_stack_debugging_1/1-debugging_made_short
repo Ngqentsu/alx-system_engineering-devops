@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Nginx server to listen on port 80.
-if systemctl is-active --quiet nginx; then rm -f /etc/nginx/sites-enabled/default;
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default;
-systemctl restart nginx; else echo "Nginx is not running"; fi
+# Configures an Nginx server to listen on port 80.
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+systemctl start nginx
+systemctl status nginx | grep -q "active (running)" && systemctl restart nginx
