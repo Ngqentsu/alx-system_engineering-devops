@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Configures the container to fit the above requirements
+
+# Stop Apache if running
+if pgrep apache2 >/dev/null; then
+    service apache2 stop
+fi
+
+# Set permissions on Nginx configuration file
+chmod 644 /etc/nginx/nginx.conf
+
+# Change user in Nginx configuration
+sed -i 's/#user www-data/user nginx/' /etc/nginx/nginx.conf
+
+# Change default port to 8080 in Nginx configuration
+sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
+
+# Start Nginx service
+service nginx start
