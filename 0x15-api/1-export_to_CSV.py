@@ -27,7 +27,7 @@ if __name__ == "__main__":
     with open(csv_filename, 'w', newline='') as csvfile:
         fieldnames = ["USER_ID", "USERNAME",
                       "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONNUMERIC)
+        csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
 
         for task in todos:
             csv_writer.writerow([user_id, username,
