@@ -1,0 +1,1 @@
+While a web server can also serve dynamic content, this task is usually given to an application server. In this project this piece is added to the infrastructure, plugged to Nginx and make serve the Airbnb clone project.
